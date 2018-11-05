@@ -3,7 +3,6 @@
 module Rasa.Ext.Syntax where
 
 import Rasa.Ext
-import Rasa.Ext.Logger
 
 import Control.Monad
 
@@ -30,7 +29,6 @@ startParse (BufTextChanged _ _) = do
 getRanges :: BufAction [(CrdRange,Token)]
 getRanges = do
   Tokens ranges <- getBufExt
-  logInfo $ show $ ranges
   return ranges
 
 -- | Sequences actions over each range as a 'BufAction'
