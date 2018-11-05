@@ -13,10 +13,10 @@ lexText txt = do
   return $ lexNodes $ commonmarkToNode [] [] (Y.toText txt)
 
 lexNodes :: Node -> [(CrdRange,Token)]
-lexNodes (Node (Nothing) _ _)                 = [] -- Ignore nodes without positions
-lexNodes (Node (Just _) (TEXT _) _)           = [] -- Ignore leaf nodes
-lexNodes (Node (Just _) DOCUMENT nodes)       = [] -- Skip the root node
-  concat $ ( lexNodes <$> nodes )
+lexNodes (Node (Nothing) _ _)                 = []  -- Ignore nodes without positions
+lexNodes (Node (Just _) (TEXT _) _)           = []  -- Ignore leaf nodes
+lexNodes (Node (Just _) DOCUMENT nodes)       =
+  concat $ ( lexNodes <$> nodes )                   -- Skip the root node
 lexNodes (Node (Just posinfo) nodeType nodes) =
   (posToRange posinfo, nodeTypeToToken nodeType) : ( concat $ ( lexNodes <$> nodes ) )
 
