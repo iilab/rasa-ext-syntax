@@ -1,0 +1,53 @@
+name:                rasa-ext-syntax
+version:             0.0.0
+synopsis:            Rasa Ext for syntax highlighting
+description:         Rasa Ext for syntax highlighting.
+homepage:            https://github.com/iilab/rasa-ext-syntax/
+license:             GPL-3
+license-file:        LICENSE
+author:              Jun Matsushita
+maintainer:          jun@iilab.org
+copyright:           2018 Jun Matsushita
+category:            Extension
+build-type:          Simple
+-- extra-source-files:
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Rasa.Ext.Syntax
+                     , Rasa.Ext.Syntax.Internal.Markdown
+                     , Rasa.Ext.Syntax.Internal.Types
+  build-depends:       base >= 4.8 && < 5
+                     , rasa
+                     , rasa-ext-logger
+                     , text
+                     , yi-rope
+                     , text-lens
+                     , data-default
+                     , lens
+                     , mtl
+                     , cmark-gfm
+
+  default-language:    Haskell2010
+
+  default-extensions:
+
+  ghc-options:         -Wall
+
+test-suite rasa-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  build-depends:       base
+                     , rasa-ext-syntax
+                     , hspec
+  other-modules:
+                       Rasa.Ext.SyntaxSpec
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  default-language:    Haskell2010
+  default-extensions:  OverloadedStrings
+
+source-repository head
+  type:     git
+  location: https://github.com/iilab/rasa-ext-syntax
