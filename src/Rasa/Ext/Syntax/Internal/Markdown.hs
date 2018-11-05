@@ -13,9 +13,10 @@ lexText txt = do
   return $ lexNodes $ commonmarkToNode [] [] (Y.toText txt)
 
 lexNodes :: Node -> [(CrdRange,Token)]
-lexNodes (Node (Nothing) _ _)                 = []
-lexNodes (Node (Just _) (TEXT _) _) = []
-lexNodes (Node (Just _) DOCUMENT nodes) = concat $ ( lexNodes <$> nodes )
+lexNodes (Node (Nothing) _ _)                 = [] -- Ignore nodes without positions
+lexNodes (Node (Just _) (TEXT _) _)           = [] -- Ignore leaf nodes
+lexNodes (Node (Just _) DOCUMENT nodes)       = [] -- Skip the root node
+  concat $ ( lexNodes <$> nodes )
 lexNodes (Node (Just posinfo) nodeType nodes) =
   (posToRange posinfo, nodeTypeToToken nodeType) : ( concat $ ( lexNodes <$> nodes ) )
 
@@ -33,4 +34,4 @@ nodeTypeToToken _             = MdOther
 setMarkdownStyle :: (CrdRange,Token) -> BufAction (Span CrdRange Style)
 setMarkdownStyle (r, MdTitle) = return $ Span r (flair Standout)
 setMarkdownStyle (r, MdQuote) = return $ Span r (flair Standout)
-setMarkdownStyle (_, _) = return $ Span (Range (Coord 0 0) (Coord 0 0)) (Style (Nothing, Nothing, Nothing))
+setMarkdownStyle (_, _)       = return $ Span (Range (Coord 0 0) (Coord 0 0)) (Style (Nothing, Nothing, Nothing))
