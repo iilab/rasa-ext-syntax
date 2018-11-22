@@ -1,5 +1,5 @@
 name:                rasa-ext-syntax
-version:             0.0.0
+version:             0.1.0
 synopsis:            Rasa Ext for syntax highlighting
 description:         Rasa Ext for syntax highlighting.
 homepage:            https://github.com/iilab/rasa-ext-syntax/
@@ -16,10 +16,11 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Rasa.Ext.Syntax
-                     , Rasa.Ext.Syntax.Internal.Markdown
-                     , Rasa.Ext.Syntax.Internal.Types
+
   build-depends:       base >= 4.8 && < 5
                      , rasa
+                     , rasa-ext-files
+                     , rasa-ext-views
                      , text
                      , yi-rope
                      , text-lens
